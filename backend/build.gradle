@@ -31,7 +31,22 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'org.seasar.doma.boot:doma-spring-boot-starter:2.0.0'
-	annotationProcessor 'org.seasar.doma:doma-processor:2.56.0'
+	annotationProcessor 'org.seasar.doma:doma-processor:3.0.0'
+}
+
+tasks.register('copyDomaSqlResources', Copy) {
+    from('src/main/resources/META-INF')
+    into("$buildDir/classes/java/main/META-INF")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.named('processResources') {
+    exclude('META-INF/**')
+}
+
+tasks.named('compileJava', org.gradle.api.tasks.compile.JavaCompile) {
+    dependsOn(tasks.named('copyDomaSqlResources'))
+    classpath += files("$buildDir/classes/java/main")
 }
 
 tasks.named('test') {
