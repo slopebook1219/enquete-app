@@ -1,0 +1,10 @@
+# ルートおよび各サブディレクトリの不要ファイルを除外
+**/node_modules/
+**/build/
+**/target/
+**/.gradle/
+**/.next/
+**/.idea/
+**/.vscode/
+**/.DS_Store
+*.log
